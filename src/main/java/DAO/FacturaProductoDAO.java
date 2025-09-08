@@ -1,4 +1,4 @@
-package
+package DAO;
 public class FacturaProductoDAO{
 
 }
