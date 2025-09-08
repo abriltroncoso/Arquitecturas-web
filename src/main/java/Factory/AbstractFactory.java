@@ -2,6 +2,8 @@ package Factory;
 
 import DAO.ProductoDAO;
 import DAO.ClienteDAO;
+import DAO.FacturaDAO;
+import DAO.FacturaProductoDAO;
 
 
 public abstract class AbstractFactory{
