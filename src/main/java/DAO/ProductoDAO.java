@@ -1,5 +1,4 @@
 package DAO;
-
 import entity.Producto;
 import java.util.List;
 
