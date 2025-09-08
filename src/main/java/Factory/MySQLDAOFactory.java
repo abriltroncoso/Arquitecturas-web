@@ -4,9 +4,8 @@ import DAO.ClienteDAO;
 import DAO.MySQLClienteDAO;
 import DAO.ProductoDAO;
 
-import DAO.MySQLDAOProducto;
+import DAO.MySQLProductoDAO;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -51,7 +50,7 @@ public class MySQLDAOFactory extends AbstractFactory {
 
     @Override
     public ProductoDAO getProductoDAO() {
-        return new MySQLDAOProducto(conn);
+        return new MySQLProductoDAO(conn);
     }
 
     @Override
