@@ -1,3 +1,5 @@
+package Factory;
+import DAO.ProductoDAO;
 public abstract class AbstractFactory{
     public static final int MYSQL_JDBC=1;
     public abstract ProductoDAO getProductoDAO();
