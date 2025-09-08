@@ -1,3 +1,9 @@
+package Factory;
+
+import DAO.ProductoDAO;
+import DAO.ClienteDAO;
+
+
 public abstract class AbstractFactory{
     public static final int MYSQL_JDBC=1;
     public abstract ProductoDAO getProductoDAO();
@@ -6,7 +12,7 @@ public abstract class AbstractFactory{
     public abstract FacturaProductoDAO getFacturaProductoDAO();
     public static AbstractFactory getDAOFactory(int whichFactory){
         switch(whichFactory){
-            case 'MYSQL_JDBC':{
+            case MYSQL_JDBC:{
                 return MySQLDAOFactory.getInstance();
 
             }
