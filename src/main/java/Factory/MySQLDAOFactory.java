@@ -1,6 +1,8 @@
 package Factory;
 
 import DAO.ClienteDAO;
+import DAO.FacturaDAO;
+import DAO.FacturaProductoDAO;
 import DAO.MySQLClienteDAO;
 import DAO.ProductoDAO;
 
