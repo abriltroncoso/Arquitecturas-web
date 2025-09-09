@@ -106,6 +106,7 @@ public class MySQLProductoDAO implements ProductoDAO {
                 Producto producto = new Producto(id, nombre, precio);
                 productos.add(producto);
             }
+            System.out.println(productos);
 
         }catch (SQLException e) {
             e.printStackTrace();
