@@ -1,9 +1,10 @@
 package DAO;
 
 import entity.Cliente;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLClienteDAO implements ClienteDAO {
     private final Connection conn;
@@ -13,39 +14,132 @@ public class MySQLClienteDAO implements ClienteDAO {
     }
 
     @Override
-    public void create(Cliente c) {
-        final String sql = "INSERT INTO cliente (nombre, email) VALUES (?, ?)";
-        try (PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setString(1, c.getNombre());
-            st.setString(2, c.getEmail());
-            st.executeUpdate();
-        } catch (SQLException e){
+    public void insertar(Cliente c) {
+        String sql = "INSERT INTO cliente (nombre, email) VALUES (?, ?)";
+        PreparedStatement ps = null;
+    
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, c.getNombre());
+            ps.setString(2, c.getEmail());
+            ps.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException("Error al insertar cliente", e);
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void update(Cliente c) {
-        final String sql = "UPDATE cliente SET nombre = ?, email = ? WHERE idCliente = ?";
-        try (PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setString(1, c.getNombre());
-            st.setString(2, c.getEmail());
-            st.setInt(3, c.getIdCliente());
-            st.executeUpdate();
-        } catch (SQLException e){
+    public void actualizar(Cliente c) {
+        String sql = "UPDATE cliente SET nombre = ?, email = ? WHERE idCliente = ?";
+        PreparedStatement ps = null;
+    
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, c.getNombre());
+            ps.setString(2, c.getEmail());
+            ps.setInt(3, c.getIdCliente());
+            ps.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar cliente", e);
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void delete(Integer idCliente) {
-        final String sql = "DELETE FROM cliente WHERE idCliente = ?";
-        try (PreparedStatement st = conn.prepareStatement(sql)) {
-            st.setInt(1, idCliente);
-            st.executeUpdate();
-        } catch (SQLException e){
+    public void eliminar(Integer idCliente) {
+        String sql = "DELETE FROM cliente WHERE idCliente = ?";
+        PreparedStatement ps = null;
+    
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            ps.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar cliente", e);
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public List<Cliente> obtenerTodos() {
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM cliente";
+        Statement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                clientes.add(new Cliente(
+                        rs.getInt("idCliente"),
+                        rs.getString("nombre"),
+                        rs.getString("email")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener todos los clientes", e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
+        return clientes;
     }
+
+    @Override
+    public Cliente obtenerPorId(int idCliente) {
+        Cliente cliente = null;
+        String sql = "SELECT * FROM cliente WHERE idCliente = ?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente(
+                        rs.getInt("idCliente"),
+                        rs.getString("nombre"),
+                        rs.getString("email")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener cliente por ID", e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return cliente;
+    }
+    
+    
 }
