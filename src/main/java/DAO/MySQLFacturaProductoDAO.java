@@ -44,7 +44,7 @@ public class MySQLFacturaProductoDAO implements FacturaProductoDAO {
    }
    @Override
     public  void eliminar(FacturaProducto fp){
-        String sql = "DELETE FROM factura_producto WHERE idFactura = ?";
+        String sql = "DELETE FROM factura_producto WHERE idFactura = ? AND idProducto = ?";
         try(PreparedStatement ps= conexion.prepareStatement(sql)) {
             ps.setInt(1, fp.getIdFactura());
             ps.setInt(2, fp.getIdProducto());

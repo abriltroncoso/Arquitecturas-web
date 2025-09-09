@@ -39,7 +39,7 @@ public class MySQLProductoDAO implements ProductoDAO {
     }
     @Override
     public void actualizar(Producto producto) {
-        String query = "UPDATE productos SET nombre=?, valor=? WHERE id=?";
+        String query = "UPDATE producto SET nombre=?, valor=? WHERE id=?";
         PreparedStatement ps = null;
         try {
             ps = conexion.prepareStatement(query);
@@ -65,7 +65,7 @@ public class MySQLProductoDAO implements ProductoDAO {
 
     @Override
     public void eliminar(Producto producto) {
-        String query = "DELETE FROM productos WHERE id=?";
+        String query = "DELETE FROM producto WHERE id=?";
         PreparedStatement ps = null;
         try {
             ps = conexion.prepareStatement(query);
@@ -135,7 +135,7 @@ public class MySQLProductoDAO implements ProductoDAO {
             rs = ps.executeQuery();
             if (rs.next()){
                 String nombre = rs.getString("nombre");
-                Float precio = rs.getFloat("precio");
+                Float precio = rs.getFloat("valor");
 
                 producto = new Producto(id, nombre, precio);
 
