@@ -3,7 +3,8 @@ package DAO;
 import entity.Factura;
 
 public interface FacturaDAO {
-    void create(Factura f);
-    void update(Factura f);
-    void delete(Integer idFactura);
+    void insertar(Factura f);
+    void actualizar(Factura f);
+    void eliminar(Integer idFactura);
+    Factura buscarFactura(Integer idFactura);
 }
