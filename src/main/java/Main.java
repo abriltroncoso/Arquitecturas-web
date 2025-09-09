@@ -1,9 +1,11 @@
 
 import DAO.ClienteDAO;
+import DAO.ProductoDAO;
 import Factory.AbstractFactory;
 import Factory.MySQLDAOFactory;
 import Utils.HelperMySQL;
 import entity.Cliente;
+import entity.Producto;
 
 import java.sql.Connection;
 
@@ -25,5 +27,9 @@ public class Main {
 
         ClienteDAO clienteDAO = chosenFactory.getClienteDAO();
         clienteDAO.insertar(new Cliente(1,"Juan Perez", "juan.perez@example.com"));
+
+        ProductoDAO productoDAO = chosenFactory.getProductoDAO();
+        productoDAO.insertar(new Producto(1,"yerba",20.5f));
+        productoDAO.obtenerTodos();
     }
 }

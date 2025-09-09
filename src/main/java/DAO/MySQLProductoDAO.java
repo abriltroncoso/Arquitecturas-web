@@ -90,7 +90,7 @@ public class MySQLProductoDAO implements ProductoDAO {
     @Override
     public List<Producto> obtenerTodos() {
         List<Producto> productos = new ArrayList<>();
-        String query = "SELECT * FROM productos";
+        String query = "SELECT * FROM producto";
         Statement stmt = null;
         ResultSet rs = null;
 
@@ -106,6 +106,7 @@ public class MySQLProductoDAO implements ProductoDAO {
                 Producto producto = new Producto(id, nombre, precio);
                 productos.add(producto);
             }
+
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -124,7 +125,7 @@ public class MySQLProductoDAO implements ProductoDAO {
     @Override
     public Producto obtenerPorId(int id) {
         Producto producto = null;
-        String query = "SELECT * FROM productos WHERE idProducto=?";
+        String query = "SELECT * FROM producto WHERE idProducto=?";
         ResultSet rs = null;
         PreparedStatement ps = null;
         try {

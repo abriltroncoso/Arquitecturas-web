@@ -11,7 +11,7 @@ public class MySQLDAOFactory extends AbstractFactory {
     private static MySQLDAOFactory instance = null;
 
     public static final String uri = "jdbc:mysql://localhost:3306/Entregable1";
-    public static Connection conn;
+    private static Connection conn;
 
     private MySQLDAOFactory() {
     }
@@ -23,7 +23,7 @@ public class MySQLDAOFactory extends AbstractFactory {
         return instance;
     }
 
-    public static Connection createConnection() {
+    public Connection createConnection() {
         if (conn != null) {
             return conn;
         }
