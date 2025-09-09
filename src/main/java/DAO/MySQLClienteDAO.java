@@ -4,28 +4,12 @@ import entity.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class MySQLClienteDAO implements ClienteDAO {
     private final Connection conn;
 
     public MySQLClienteDAO(Connection conn){
         this.conn = conn;
-        crearTabla();
-    }
-
-    private void crearTabla() {
-        final String sql = "CREATE TABLE IF NOT EXISTS cliente (" +
-                "    idCliente INT NOT NULL," +
-                "    nombre VARCHAR(50) NOT NULL," +
-                "    email VARCHAR(50) NOT NULL," +
-                "    PRIMARY KEY (idCliente)" +
-                ");";
-        try (Statement st = conn.createStatement()) {
-            st.execute(sql);
-        } catch (SQLException e){
-            throw new RuntimeException("Error creando tabla 'cliente'", e);
-        }
     }
 
     @Override
