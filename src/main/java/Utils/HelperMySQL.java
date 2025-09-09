@@ -15,26 +15,10 @@ import org.apache.commons.csv.CSVRecord;
 public class HelperMySQL {
     public Connection conn = null;
 
-    public HelperMySQL() {// Constructor
-        String uri = "jdbc:mysql://localhost:3306/Entregable1";
-
-        try {
-            conn = DriverManager.getConnection(uri, "root", "");
-            conn.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public HelperMySQL(Connection conn) {
+        this.conn = conn;
     }
 
-    public void closeConnection() {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void dropTable(String tableName) throws SQLException {
         final String sql = "DROP TABLE IF EXISTS " + tableName;
