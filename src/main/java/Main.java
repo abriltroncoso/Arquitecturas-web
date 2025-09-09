@@ -21,15 +21,15 @@ public class Main {
         helper.dropTable("producto");
         helper.dropTable("cliente");
         helper.createTables();
+        helper.populateDB();
 
-
-
-
-        ClienteDAO clienteDAO = chosenFactory.getClienteDAO();
-        clienteDAO.insertar(new Cliente(1,"Juan Perez", "juan.perez@example.com"));
-
-        ProductoDAO productoDAO = chosenFactory.getProductoDAO();
-        productoDAO.insertar(new Producto(1,"yerba",20.5f));
-        productoDAO.obtenerTodos();
+        /*
+         * ClienteDAO clienteDAO = chosenFactory.getClienteDAO();
+         * clienteDAO.insertar(new Cliente(1,"Juan Perez", "juan.perez@example.com"));
+         * 
+         * ProductoDAO productoDAO = chosenFactory.getProductoDAO();
+         * productoDAO.insertar(new Producto(1,"yerba",20.5f));
+         * productoDAO.obtenerTodos();
+         */
     }
 }

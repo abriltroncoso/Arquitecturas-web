@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -12,13 +13,14 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import entity.Cliente;
+
 public class HelperMySQL {
     public Connection conn = null;
 
     public HelperMySQL(Connection conn) {
         this.conn = conn;
     }
-
 
     public void dropTable(String tableName) throws SQLException {
         final String sql = "DROP TABLE IF EXISTS " + tableName;
@@ -35,7 +37,6 @@ public class HelperMySQL {
     }
 
     public void createTables() throws SQLException {
-        // Tabla Cliente
         // Tabla cliente
         crearTabla("CREATE TABLE IF NOT EXISTS cliente (" +
                 "    idCliente INT NOT NULL AUTO_INCREMENT," +
@@ -82,4 +83,59 @@ public class HelperMySQL {
         return records;
     }
 
+    public void populateDB() throws Exception {
+        try {
+            System.out.println("Populating DB...");
+            for (CSVRecord row : getData("clientes.csv")) {
+                if (row.size() >= 3) { // Verificar que hay al menos 3 campos en el CSVRecord
+                    String idString = row.get(0);
+                    String nombre = row.get(1);
+                    String email = row.get(2);
+
+                    if (!idString.isEmpty() && !nombre.isEmpty() && !email.isEmpty()) {
+                        try {
+                            int idCliente = Integer.parseInt(idString);
+                            Cliente cliente = new Cliente(idCliente, nombre, email);
+                            insertCliente(cliente, conn);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Error de formato en datos de cliente: " + e.getMessage());
+                        }
+                    }
+                }
+            }
+            System.out.println("Clientes insertados");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int insertCliente(Cliente cliente, Connection conn) throws Exception {
+        String insert = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(insert);
+            ps.setInt(1, cliente.getIdCliente());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getEmail());
+            if (ps.executeUpdate() == 0) {
+                throw new Exception("No se pudo insertar");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closePsAndCommit(conn, ps);
+        }
+        return 0;
+    }
+
+    private void closePsAndCommit(Connection conn, PreparedStatement ps) {
+        if (conn != null) {
+            try {
+                ps.close();
+                conn.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
