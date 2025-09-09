@@ -16,7 +16,7 @@ public class HelperMySQL {
     public Connection conn = null;
 
     public HelperMySQL() {// Constructor
-        String uri = "jdbc:mysql://localhost:3306/entregable1";
+        String uri = "jdbc:mysql://localhost:3306/Entregable1";
 
         try {
             conn = DriverManager.getConnection(uri, "root", "");
@@ -54,7 +54,7 @@ public class HelperMySQL {
         // Tabla Cliente
         // Tabla cliente
         crearTabla("CREATE TABLE IF NOT EXISTS cliente (" +
-                "    idCliente INT NOT NULL," +
+                "    idCliente INT NOT NULL AUTO_INCREMENT," +
                 "    nombre VARCHAR(500) NOT NULL," +
                 "    email VARCHAR(150) NOT NULL," +
                 "    CONSTRAINT pk_cliente PRIMARY KEY (idCliente)" +

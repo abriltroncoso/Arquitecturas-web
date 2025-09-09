@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class MySQLDAOFactory extends AbstractFactory {
     private static MySQLDAOFactory instance = null;
 
-    public static final String uri = "jdbc:mysql://localhost:3306/entregable1";
+    public static final String uri = "jdbc:mysql://localhost:3306/Entregable1";
     public static Connection conn;
 
     private MySQLDAOFactory() {
