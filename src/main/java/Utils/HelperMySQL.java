@@ -52,35 +52,40 @@ public class HelperMySQL {
 
     public void createTables() throws SQLException {
         // Tabla Cliente
+        // Tabla cliente
         crearTabla("CREATE TABLE IF NOT EXISTS cliente (" +
                 "    idCliente INT NOT NULL," +
                 "    nombre VARCHAR(500) NOT NULL," +
                 "    email VARCHAR(150) NOT NULL," +
-                "    PRIMARY KEY (idCliente)" +
+                "    CONSTRAINT pk_cliente PRIMARY KEY (idCliente)" +
                 ");");
-        // Tabla Producto
+
+        // Tabla producto
         crearTabla("CREATE TABLE IF NOT EXISTS producto (" +
                 "    idProducto INT NOT NULL," +
                 "    nombre VARCHAR(45) NOT NULL," +
                 "    valor FLOAT NOT NULL," +
-                "    PRIMARY KEY (idProducto)" +
+                "    CONSTRAINT pk_producto PRIMARY KEY (idProducto)" +
                 ");");
-        // Tabla Factura
+
+        // Tabla factura
         crearTabla("CREATE TABLE IF NOT EXISTS factura (" +
                 "    idFactura INT NOT NULL," +
                 "    idCliente INT NOT NULL," +
-                "    PRIMARY KEY (idFactura)," +
-                "    FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)" +
+                "    CONSTRAINT pk_factura PRIMARY KEY (idFactura)," +
+                "    CONSTRAINT fk_factura_cliente FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)" +
                 ");");
+
         // Tabla factura_producto
         crearTabla("CREATE TABLE IF NOT EXISTS factura_producto (" +
                 "    idFactura INT NOT NULL," +
                 "    idProducto INT NOT NULL," +
                 "    cantidad INT NOT NULL," +
-                "    PRIMARY KEY (idFactura, idProducto)," +
-                "    FOREIGN KEY (idFactura) REFERENCES factura(idFactura)," +
-                "    FOREIGN KEY (idProducto) REFERENCES producto(idProducto)" +
+                "    CONSTRAINT pk_factura_producto PRIMARY KEY (idFactura, idProducto)," +
+                "    CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura)," +
+                "    CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto)" +
                 ");");
+
     }
 
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
