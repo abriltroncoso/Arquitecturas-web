@@ -14,7 +14,7 @@ public class MySQLProductoDAO implements ProductoDAO {
 
     @Override
     public void insertar(Producto producto) {
-        String query = "INSERT INTO productos VALUES (?,?,?)";
+        String query = "INSERT INTO producto VALUES (?,?,?)";
         PreparedStatement ps = null;
         try {
             ps = conexion.prepareStatement(query);
@@ -28,7 +28,7 @@ public class MySQLProductoDAO implements ProductoDAO {
             }
         }
         catch (SQLException e) {
-
+            e.printStackTrace();
         } finally {
             try {
                 if (ps != null) ps.close();
