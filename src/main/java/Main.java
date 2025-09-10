@@ -8,6 +8,7 @@ import entity.Cliente;
 import entity.Producto;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -35,5 +36,13 @@ public class Main {
          * productoDAO.insertar(new Producto(1,"yerba",20.5f));
          * productoDAO.obtenerTodos();
          */
+        ClienteDAO clienteDAO = factory.getClienteDAO();
+        List<Cliente> clientes = clienteDAO.obtenerClientePorFacturacion();
+
+        System.out.println(" Clientes ordenados por total facturado:");
+        for (Cliente c : clientes) {
+            System.out.println(c.getIdCliente() + " - " + c.getNombre() + " (" + c.getEmail() + ")");
+        }
+
     }
 }
