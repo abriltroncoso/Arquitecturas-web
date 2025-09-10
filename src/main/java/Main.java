@@ -24,8 +24,9 @@ public class Main {
         helper.populateDB();
 
         ProductoDAO productoDAO = factory.getProductoDAO();
-        productoDAO.obtenerProductoMayorRecaudacion();
-
+        Producto productoMayorRecaudacion = productoDAO.obtenerProductoMayorRecaudacion();
+        System.out.println("Producto con mayor recaudación:");
+        System.out.println(productoMayorRecaudacion);
         /*
          * ClienteDAO clienteDAO = chosenFactory.getClienteDAO();
          * clienteDAO.insertar(new Cliente(1,"Juan Perez", "juan.perez@example.com"));

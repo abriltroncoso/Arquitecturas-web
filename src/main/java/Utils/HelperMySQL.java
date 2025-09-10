@@ -145,7 +145,7 @@ public class HelperMySQL {
                     }
                 }
             }
-            System.out.println("Facturas instaertadas");
+            System.out.println("Facturas insertadas");
 
             for (CSVRecord row : getData("facturas-productos.csv")) {
                 if (row.size() >= 3) {
