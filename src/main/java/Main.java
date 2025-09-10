@@ -28,6 +28,7 @@ public class Main {
         Producto productoMayorRecaudacion = productoDAO.obtenerProductoMayorRecaudacion();
         System.out.println("Producto con mayor recaudación:");
         System.out.println(productoMayorRecaudacion);
+
         /*
          * ClienteDAO clienteDAO = chosenFactory.getClienteDAO();
          * clienteDAO.insertar(new Cliente(1,"Juan Perez", "juan.perez@example.com"));
@@ -36,6 +37,7 @@ public class Main {
          * productoDAO.insertar(new Producto(1,"yerba",20.5f));
          * productoDAO.obtenerTodos();
          */
+
         ClienteDAO clienteDAO = factory.getClienteDAO();
         List<Cliente> clientes = clienteDAO.obtenerClientePorFacturacion();
 
@@ -43,6 +45,8 @@ public class Main {
         for (Cliente c : clientes) {
             System.out.println(c.getIdCliente() + " - " + c.getNombre() + " (" + c.getEmail() + ")");
         }
+
+        factory.closeConnection();
 
     }
 }
