@@ -23,6 +23,9 @@ public class Main {
         helper.createTables();
         helper.populateDB();
 
+        ProductoDAO productoDAO = factory.getProductoDAO();
+        productoDAO.obtenerProductoMayorRecaudacion();
+
         /*
          * ClienteDAO clienteDAO = chosenFactory.getClienteDAO();
          * clienteDAO.insertar(new Cliente(1,"Juan Perez", "juan.perez@example.com"));

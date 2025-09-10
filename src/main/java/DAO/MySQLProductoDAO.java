@@ -154,6 +154,35 @@ public class MySQLProductoDAO implements ProductoDAO {
         return  producto;
     }
 
+    public Producto obtenerProductoMayorRecaudacion(){
+        Producto producto = null;
+        String query = "SELECT p.idProducto, p.nombre, p.valor, SUM(fp.cantidad * p.valor) AS recaudacion " +
+                "FROM producto p " +
+                "JOIN factura_producto fp ON p.idProducto  = fp.idProducto " +
+                "GROUP BY p.idProducto, p.nombre ,p.valor " +
+                "ORDER BY recaudacion DESC " +
+                "LIMIT 1 "
+                ;
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ResultSet rs =ps.executeQuery();
+
+            if (rs.next()){
+                producto = new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("nombre"),
+                        rs.getFloat("valor")
+                );
+                System.out.println("Producto obtenido: " + producto.getNombre());
+            }else System.out.println("no se encontro producto con mayor recaudacion");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return producto;
+    }
+
+
 
 }
 

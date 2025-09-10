@@ -8,5 +8,5 @@ public interface ProductoDAO    {
     public void eliminar(Producto producto);
     public List<Producto> obtenerTodos();
     public Producto obtenerPorId(int id);
-
+    public Producto obtenerProductoMayorRecaudacion();
 }
